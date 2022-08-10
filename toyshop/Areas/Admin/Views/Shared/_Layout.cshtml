@@ -1,0 +1,83 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using toyshop.Models
+@using toysite.Models
+@inject SignInManager<User> singinManger
+@inject UserManager<User> userManager
+@{ 
+    string displayName = "";
+    if (User.Identity.IsAuthenticated)
+    {
+        var user=  await userManager.FindByNameAsync(User.Identity.Name);
+        displayName = user.Name + " " + user.LastName;
+
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title </title>
+    @RenderSection("title", required: false)
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Css/Admin/style.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/bootstrap.css" rel="stylesheet" />
+    @RenderSection("style", required: false)
+</head>
+<body>
+    <nav dir="rtl" class="navbar  navbar-expand-lg navbar-dark bg-primary  ">
+        <div class="container-fluid">
+            <a class="navbar-brand mb-2 mb-lg-2" href="#">پنل مدیریتی</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav margin-left mb-2 mb-lg-2">
+                    <li class="nav-item">
+                        <a class="nav-link mt-1 text-white text-opacity-100 " aria-current="page" asp-area="Admin" asp-controller="Home" asp-action="Index">صفحه اصلی</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle me-3 mt-1 text-white text-opacity-100 font-monospace " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            کالا
+                        </a>
+                        <ul class="dropdown-menu me-3 mt-1 p-0" style="right:5px; left:auto;margin-right:0;" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item text-right" style=" text-align: right;" asp-area="Admin" asp-controller="Product" asp-action="List">لیست کالاها</a></li>
+                            <li> <a class="dropdown-item text-right" style=" text-align: right;" asp-area="Admin" asp-controller="Product" asp-action="Add">افرزودن کالا</a></li>
+
+                        </ul>
+
+                    @*<li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle me-3 mt-1 text-white text-opacity-100 font-monospace " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            برندها
+                        </a>
+                        <ul class="dropdown-menu me-3 mt-1 p-0" style="right:5px; left:auto;margin-right:0;" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item text-right" style=" text-align: right;" asp-area="Admin" asp-controller="Brand" asp-action="list">لیست برندها</a></li>
+                            <li> <a class="dropdown-item text-right" style=" text-align: right;" asp-area="Admin" asp-controller="Brand" asp-action="Add">افرزودن برند</a></li>
+
+                        </ul>*@
+
+
+
+                     
+
+                </ul>
+                <span class="navbar-text d-inline-flex align-items-center"><a asp-area="Admin" asp-controller="Home" asp-action="Index" class="btn btn-link text-white decor-none  btn-sm  no-under">@displayName  </a>|<a asp-area="Admin" asp-controller="Account" asp-action="Signout" class="btn decor-none btn-sm btn-link no-under">خروج</a></span>
+            </div>
+        </div>
+    </nav>
+
+    <div dir="rtl" class="container-fluid  mt-3">
+
+        @RenderSection("breadcrumb", required: false)
+
+
+        @RenderBody()
+    </div>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.js"></script>
+    <script src="~/lib/jquery/jquery.min.js"></script>
+
+    @RenderSection("Scripts", required: false)
+
+</body>
+</html>

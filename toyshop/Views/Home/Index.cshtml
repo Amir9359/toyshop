@@ -1,0 +1,113 @@
+﻿@using System.Reflection
+@using Microsoft.EntityFrameworkCore
+@using toysite.Models
+@inject ApplicationDbContext _context;
+
+@model IEnumerable<toyshop.Models.Products.Product>
+@{
+    ViewData["Title"] = "صفحه اصلی";
+    ViewData["Massage"] = "صفحه اصلی";
+    var groups = await _context.Groups.ToListAsync();
+}
+
+@section Style
+ {
+    <link href="~/css/blog.css" rel="stylesheet" />
+}
+
+
+<section id="pageContentBox" class="pageRow blogPage">
+    <div class="wrapper">
+        <div class="row">
+            <div class="breadcrumbsBox col-lg-12 col-md-12 col-sm-12 col-xs-12 clearfix">
+                <ul class="breadcrumb-list">
+                    <li class="pageTxtColor robotoLight">
+                        <i class="fa fa-angle-left"></i>
+                        <a href="home-1.html" class="pageTxtColor robotoLight">خانه</a>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="col-lg-9 col-md-8 col-sm-12 col-xs-12 clearfix">
+
+                @foreach (var product in Model)
+                {
+                    <div class="blog-item wow fadeInUp" data-wow-delay="0.3s">
+                        <div class="blog-slider">
+                            <div class="owl-blog_carousel white-control">
+                                <div class="owl-blog_carousel_img">
+                                    <a href="/Home/Details/@product.Id">
+                                        <img src="media/blog-preview/@product.Id .jpg" alt="Blog Item">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="blog-published circleBox">
+                                <span class="blog-published_date text-center text whiteTxtColor">@product.Price.ToString("N0")</span>
+                                <span class="blog-published_month text-uppercase text-center roboto whiteTxtColor">تومان</span>
+                            </div>
+                        </div>
+                        <div class="blog-info">
+                            <div class="blog-info_header">
+                                <div class="blog-info_header-option">
+                                    <span class="blog-info_header-option_name robotoCondensed pageTxtColor">گروه : </span>
+                                    <a href="/Home/Details/@product.Id" class="blog-info_header-option_val robotoCondensed customColor">@product.group.Title</a>
+                                    <i class="fa fa-folder-open blackTxtColor"></i>
+
+                                </div>
+                            </div>
+                            <div class="blog-info_body">
+                                <h3 class="blog-info_title ralewaySemiBold blackTxtColor">@product.PrimaryTitle</h3>
+                                <div class="blog-info_text robotoLight pageTxtColor">@product.Description</div>
+                                <a asp-controller="Cart" asp-action="Index" asp-route-productitemsid="@product.Id"  class="ellipseLink middleBtn robotoMedium whiteTxtColor customBgColor hvr-pop">اضافه به سبد</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12 clearfix">
+                <div class="sidebar-search pageRow clearfix">
+                    <form class="sidebar-search_form form-inline pageRow" asp-action="Search" asp-controller="Home">
+                        <div class="form-group pageRow">
+                            <label class="sr-only" for="sidebarSearchQuery">Search...</label>
+                            <input type="search" style="text-align: right;padding-right: 30px;"  class="sidebar-search_field robotoLight pageTxtColor" name="Search"  id="sidebarSearchQuery" placeholder="Search...">
+                        </div>
+                        <button type="submit" class="sidebar-search_button"><i class="fa fa-search customColor"></i></button>
+                    </form>
+                </div>
+                <div class="sidebar-categories pageRow clearfix">
+                    <div class="skew-title whiteTxtColor ralewaySemiBold">مدل ها</div>
+                    <div class="sidebar-categories_body clearfix">
+                        <ul class="categories-list">
+                            @foreach (var group in groups)
+                            {
+                                <li><a asp-controller="Home" asp-action="Index"  asp-route-groupid="@group.Id"  class="robotoLight pageTxtColor">@group.Title</a></li>
+                            }
+
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<section id="paginationBox" class="pageRow graySection">
+    <div class="wrapper">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <ul class="pagination-custom">
+                    <li><a href="#" class="prev robotoCondensed"><i class="fa fa-angle-left"></i></a></li>
+                    <li><a href="#" class="item robotoCondensed">1</a></li>
+                    <li><a href="#" class="item robotoCondensed">2</a></li>
+                    <li><span class="current robotoCondensed customColor">3</span></li>
+                    <li><a href="#" class="item robotoCondensed">4</a></li>
+                    <li><a href="#" class="item robotoCondensed">5</a></li>
+                    <li><a href="#" class="next robotoCondensed"><i class="fa fa-angle-right"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+

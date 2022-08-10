@@ -1,0 +1,37 @@
+﻿@model IEnumerable<toyshop.Models.Products.Product>
+@{
+    ViewData["Title"] = "محصولات";
+    ViewData["Massage"] = "محصولات";
+}
+<div class="col-lg-12 col-md-8 col-sm-12 col-xs-12 clearfix">
+    <h3 class="pageSectionTitle text-center text-uppercase ralewayBold clear blackTxtColor wow bounceIn" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: bounceIn;">آخرین محصولات</h3>
+    <div class="pageRow latestFromCat row">
+        @foreach(var product in Model)
+        {
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 clearfix">
+                <div class="app-product-item center-block wow fadeInLeft" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInLeft;">
+                    <div class="app-product-item_header">
+                        <img src="~/media/blog-preview/@product.Id .jpg" alt="App Product">
+                        <a href="~/media/blog-preview/@product.Id .jpg" class="app-product-item_header-link whiteTxtColor" data-title="Sci Calculator" data-gallery="latest-from-category" data-toggle="lightbox"><i class="fa fa-search"></i></a>
+                    </div>
+                    <div class="app-product-item_body clearfix">
+                        <h4 class="app-product-item_body_title">
+                            <a  href="/Home/Details/@product.Id" class="ralewayBold blackTxtColor">@product.PrimaryTitle</a>
+                        </h4>
+                        <div class="app-product-item_body_price robotoCondensed pull-left">تومان  @product.Price.ToString("N0")</div>
+
+                        <div class="app-product-item_body_btnbox">
+                            <a asp-controller="Cart" asp-action="Index" asp-route-productitemsid="@product.Id" class="ellipseLink addToCartBtn robotoMedium text-uppercase hvr-pop">
+                                <i class="fa fa-shopping-cart customColor"></i>
+                                اضافه به سبد کالا
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+
+    </div>
+ 
+</div>

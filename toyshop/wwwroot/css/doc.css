@@ -1,0 +1,32 @@
+/*------------------------------------------------------------------
+[Table of contents]
+
+ - Document
+
+- Project:	App Landing HTML/CSS Theme
+- Version:	1.1
+- Author:  Andrey Sokoltsov
+- Profile:	http://themeforest.net/user/andreysokoltsov
+
+-------------------------------------------------------------------*/
+
+.documentation .alert-success {
+	background-color: #00b200;
+	border-color: #00b200;
+	color: #ffffff;
+}
+.documentation ul{
+	padding-left: 30px;
+}
+.documentation .heading-2{
+	margin: 30px 40px;
+}
+.documentation .pre{
+	color: #fff;
+	display: block;
+	font-size: 20px;
+	height: auto;
+	line-height: 20px;
+	margin: 10px 0;
+	padding: 10px;
+}

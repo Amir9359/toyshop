@@ -1,0 +1,34 @@
+﻿@model toyshop.Models.Products.Product
+
+@{
+    ViewData["Title"] = "جزئیات محصول ";
+    ViewData["Massage"] = "جزئیات محصول";
+}
+<div class="blog-item wow fadeInUp" data-wow-delay="0.3s">
+    <div class="blog-slider">
+        <div class="owl-blog_carousel white-control">
+            <div class="owl-blog_carousel_img">
+                <img src="~/media/blog-preview/@Model.Id .jpg" alt="Blog Item">
+            </div>
+        </div>
+        <div class="blog-published circleBox">
+            <span class="blog-published_date text-center text whiteTxtColor">@Model.Price.ToString("N0")</span>
+            <span class="blog-published_month text-uppercase text-center roboto whiteTxtColor">تومان</span>
+        </div>
+    </div>
+    <div class="blog-info">
+        <div class="blog-info_header">
+            <div class="blog-info_header-option">
+                <span class="blog-info_header-option_name robotoCondensed pageTxtColor">گروه : </span>
+                <a href="#" class="blog-info_header-option_val robotoCondensed customColor">@Model.group.Title</a>
+                <i class="fa fa-folder-open blackTxtColor"></i>
+
+            </div>
+        </div>
+        <div class="blog-info_body">
+            <h3 class="blog-info_title ralewaySemiBold blackTxtColor">@Model.PrimaryTitle</h3>
+            <div class="blog-info_text robotoLight pageTxtColor">@Model.Description</div>
+            <a asp-controller="Cart" asp-action="Index" asp-route-productitemsid="@Model.Id" class="ellipseLink middleBtn robotoMedium whiteTxtColor customBgColor hvr-pop">اضافه به سبد</a>
+        </div>
+    </div>
+</div>

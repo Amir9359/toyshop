@@ -1,0 +1,165 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using toysite.Models
+
+@inject UserManager<User> _userManager;
+@{
+
+    string displayname = "";
+    User Customer = null;
+    if (User.Identity.IsAuthenticated)
+    {
+        Customer = await _userManager.FindByNameAsync(User.Identity.Name);
+        displayname = Customer.Name + " " + Customer.LastName;
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - فروشگاه اسباب بازی</title>
+    @RenderSection(name: "Style", required: false)
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="/image/x-icon" href="~/img/logo.png" />
+    <link href="~/css/master.css" rel="stylesheet">
+    <link rel="stylesheet" id="switcher-css" type="text/css" href="~/plugins/switcher/css/switcher.css" media="all" />
+
+
+
+</head>
+
+<body class="animated-css">
+    <div class="sp-body">
+
+        <header class="header pageRow overflow-visible">
+            <div class="wrapper">
+                <div class="header-outer">
+                    <div class="header-inner">
+                        <div class="header-top row innerPageHeader">
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6"><a href="." class="logo"></a></div>
+                            <div class="col-lg-9 col-md-9 col-sm-6 col-xs-6">
+                                <i class="fa fa-bars mobileMenuNav whiteTxtColor"></i>
+                                <nav class="nav-container customBgColor">
+                                    <i class="fa fa-times mobileMenuNav small-device"></i>
+                                    <ul class="menu">
+                                        @if (Customer == null)
+                                        {
+                                            <li><a class="roboto whiteTxtColor menu-item" asp-action="Index" asp-controller="Home">خانه </a></li>
+                                            <li><a class="roboto whiteTxtColor menu-item" asp-action="List" asp-controller="Home">محصولات</a></li>
+                                            <li><a class="roboto whiteTxtColor menu-item" asp-action="Signin" asp-controller="Account">ورود</a></li>
+                                            <li><a class="roboto whiteTxtColor menu-item" asp-action="Signup" asp-controller="Account">ثبت نام</a></li>
+                                            <li><a class="roboto whiteTxtColor menu-item" asp-action="ContacttUs" asp-controller="Home">درباره ما</a></li>
+
+                                        }
+                                        else
+                                        {
+                                            <li><a class="roboto whiteTxtColor menu-item" asp-action="Index" asp-controller="Home">خانه </a></li>
+                                            <li><a class="roboto whiteTxtColor menu-item" asp-action="List" asp-controller="Home">محصولات</a></li>
+                                            <li><a class="roboto whiteTxtColor menu-item" asp-controller="Order" asp-action="Index">سبد خرید</a></li>
+                                            <li><a class="roboto whiteTxtColor menu-item" asp-action="Index" asp-controller="Profile">پروفایل</a></li>
+                                            <li><a class="roboto whiteTxtColor menu-item" asp-action="Signout" asp-controller="Account">خروج</a></li>
+                                            <li><a class="roboto whiteTxtColor menu-item" asp-action="ContacttUs" asp-controller="Home">درباره ما</a></li>
+
+                                            <li class="pull-left " style="margin-right: 70px;font-size: 18px"><a>@displayname به سایت خوش آمدید.</a></li>
+                                        }
+
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section id="pageTitleBox" class="pageRow paralax skew skew-bottom customBgColor trianglifyBox">
+            <div class="wrapper">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <h1 class="page-title ralewayLight whiteTxtColor">@ViewData["Massage"]</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="skew_appended whiteSection"></div>
+        </section>
+        @RenderBody()
+        
+    <footer id="footer" class="pageRow skew skew-top darkFooter">
+        <a id="scrollTop" href="#" class="goToTop whiteTxtColor"><i class="fa fa-angle-up"></i></a>
+        <div class="pageRow">
+            <div class="wrapper">
+                <div class="footerV2Box row">
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 clearfix wow fadeInLeft" data-wow-delay="0.3s">
+                        <a href="." class="logo footerLogo pull-left clear"></a>
+                        <div class="footer-desc robotoLight grayTxtColor pull-left clear">
+                            آدرس شرکت : <br />
+                            تهران ، شهرک غرب ....
+                        </div>
+                        <div class="footer-desc robotoLight grayTxtColor pull-left clear">ایمیل شرکت : <br />  info@toystore.com </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 clearfix wow fadeInUp" data-wow-delay="0.3s">
+                        <h4 class="footer-title customColor ralewayBold">آخرین محصولات </h4>
+                        <div class="footer_blog-item">
+                            <div class="footer_blog-item_img">
+                                <a href="blog-details.html" class="footer_blog-item_link"><img src="~/media/70x65/1.jpg" alt="Blog Item"></a>
+                            </div>
+                            <div class="footer_blog-item_text robotoLight grayTxtColor">Dolore magna aliqua. Ut enimad minim veniam quis nostrud</div>
+                            <div class="footer_blog-item_date robotoLight">March 30, 2015</div>
+                        </div>
+                        <div class="footer_blog-item">
+                            <div class="footer_blog-item_img">
+                                <a href="blog-details.html" class="footer_blog-item_link"><img src="~/media/70x65/2.jpg" alt="Blog Item"></a>
+                            </div>
+                            <div class="footer_blog-item_text robotoLight grayTxtColor">Aboris nisi dut aliquip commodo conse quat. Duis aute irure.</div>
+                            <div class="footer_blog-item_date robotoLight">March 30, 2015</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 clearfix wow fadeInRight" data-wow-delay="0.3s">
+                        <h4 class="footer-title customColor ralewayBold">موقعیت شرکت </h4>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12955.29659895934!2d51.35085028444852!3d35.730543082923425!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f8e0744c01d75a5%3A0xc3309a576bea7af0!2sShahrak-e-Jandarmeri%2C%20District%202%2C%20Tehran%2C%20Tehran%20Province%2C%20Iran!5e0!3m2!1sen!2s!4v1658464485847!5m2!1sen!2s" width="200" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pageRow footerBottom">
+            <div class="wrapper">
+                <div class="footerV2Box row">
+
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 clearfix">
+                        <ul class="socialmenu wow bounceIn pull-right" data-wow-delay="0.5s">
+                            <li><a href="/"   class="hvr-pop"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="/"   class="hvr-pop"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="/"  class="hvr-pop"><i class="fa fa-instagram"></i></a></li>
+                            <li><a href="/" class="hvr-pop"><i class="fa fa-google-plus"></i></a></li>
+                            <li><a href="/"  class="hvr-pop"><i class="fa fa-pinterest-p"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="skew_prepended graySection"></div>
+    </footer>
+
+
+        @RenderSection("Scripts", required: false)
+        <script src="~/js/jquery-1.11.2.min.js"></script>
+        <script src="~/js/bootstrap.min.js"></script>
+        <script src="~/js/modernizr.custom.js"></script>
+        <script src="~/js/jquery.placeholder.min.js"></script>
+        <script src="~/js/jquery-ui.min.js"></script>
+        <script src="~/js/smoothscroll.min.js"></script>
+        <script src="~/js/classie.js"></script>
+        <!--Owl Carousel-->
+        <script src="~/plugins/owl-carousel/owl.carousel.min.js"></script>
+        <!--THEME-->
+        <script src="~/js/wow.min.js"></script>
+        <script src="~/js/cssua.min.js"></script>
+        <script src="~/js/func.js"></script>
+
+        <script src="~/js/jquery-1.11.2.min.js"></script>
+        <script src="~/js/bootstrap.min.js"></script>
+        <script src="~/js/modernizr.custom.js"></script>
+    </div>
+</body>
+</html>

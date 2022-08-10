@@ -1,0 +1,83 @@
+﻿.breadcrumb-item + .breadcrumb-item {
+    padding-left:0;
+    padding-right: .02rem;
+}
+
+.breadcrumb-item + .breadcrumb-item:before {
+    float: right;
+    padding-left: 0.2rem;
+}
+
+.breadcrumb-link {
+    font-family: Arial;
+    text-decoration: none;
+}
+
+.style-1 {
+    position: relative;
+    left: 1px;
+    width: 100.3% !important;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.bredbrandd {
+}
+.decor-none{
+text-decoration:none;
+}
+.margin-left{
+    margin-left:auto;
+}
+.products {
+ 
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-gap: 10px;
+    margin-top: 10px;
+    justify-content: right;
+}
+.card-column {
+    float: right;
+}
+.wrapp {
+    max-height: 214px;
+    height: 214px;
+}
+#top_nav li a {
+    text-decoration: none;
+    color: bisque;
+    font-weight: normal;
+    font-size: 1.05rem;
+}
+h3 {
+    direction: rtl;
+}
+.pad_right {
+    padding-right: 30px;
+}
+.clearmargin {
+    margin: 60px -90px 0 0;
+}
+.col-wid {
+    width: 480px;
+}
+.text-d {
+    color : #999 !important; 
+}
+.pos {
+    position: relative;
+   
+}
+.margin-b {
+    margin: 20px 10px 10px 10px;
+}
+#content-pay {
+    max-width: 1300px;
+    margin-left: auto;
+    margin-right: auto;
+    direction: rtl;
+}
+.panel__title {
+    float: right;
+}

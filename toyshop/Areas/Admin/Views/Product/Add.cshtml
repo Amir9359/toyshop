@@ -1,0 +1,215 @@
+﻿@using Microsoft.EntityFrameworkCore
+@using toyshop.Models.Groups
+@using toyshop.Models.ViewModels.Product
+@using toysite.Models
+@model toyshop.Models.Products.GoupBrandView
+
+@inject ApplicationDbContext _context;
+@{
+    var idd = ViewBag.Idd;
+    ViewData["Title"] = (idd != null ? "تغییر  کالا" : "افزودن کالا");
+
+    var groups = await _context.Groups.ToListAsync();
+}
+<h3>@(idd != null ? "تغییر  کالا" : "افزودن کالا")</h3>
+
+@section breadcrumb{
+    <nav aria-label="breadcrumb" class="mt-3">
+        <ol class="breadcrumb bg-dark bg-opacity-10">
+            <li class="breadcrumb-item align-text-top "><a class="pe-1  m-1  breadcrumb-link" asp-area="Admin" asp-controller="Home" asp-action="Index">صفحه اصلی</a></li>
+            <li class="breadcrumb-item " aria-current="page"> @(idd != null ? "تغییر  کالا" : "افزودن کالا") </li>
+        </ol>
+    </nav>
+
+    <div class="card ">
+        <div class="card-header d-flex align-items-center justify-content-between">
+            <h1 class="h5">@(idd != null ? "تغییر  کالا" : "افزودن کالا")</h1>
+            <div>
+                <a class="btn btn-success btn-sm" asp-area="Admin" asp-action="List">لیست کالا</a>
+            </div>
+        </div>
+        <div class="card-body ">
+
+            <form action="@Url.Action("save")" class="form-control validnd" method="post" enctype="multipart/form-data" novalidate>
+                @{
+                    if (idd != null)
+                    {
+                        <input type="hidden" value="@Model.product.Id" name="id" />
+                    }
+                }
+                <div class="row  mb-3 mt-3">
+                    <label for="PrimaryTitletxt" class="form-label col-md-1">نام اصلی:</label>
+                    <div class="col-md-6">
+                        @if (Model?.product != null)
+                        {
+                            <input class="form-control " id="PrimaryTitletxt" autocomplete="off" maxlength="50" name="PrimaryTitle" value="@Model.product.PrimaryTitle" required>
+
+                        }
+                        else
+                        {
+                            <input class="form-control " id="PrimaryTitletxt" autocomplete="off" maxlength="50" name="PrimaryTitle" required>
+
+                        }
+                        <div class="invalid-feedback">لطفا نام اصلی را وارد کیند</div>
+                    </div>
+                </div>
+
+                <div class="row  mb-3 mt-3">
+                    <label for="SecondaryTitletxt" class="form-label col-md-1">نام ثانویه:</label>
+                    <div class="col-md-6">
+                        @if (Model?.product != null)
+                        {
+                            <input class="form-control " id="SecondaryTitletxt" autocomplete="off" maxlength="50" value="@Model.product.SecondTitle" name="SecondaryTitle" required>
+
+                        }
+                        else
+                        {
+                            <input class="form-control " id="SecondaryTitletxt" autocomplete="off" maxlength="50" name="SecondaryTitle" required>
+
+                        }
+                        <div class="invalid-feedback">لطفا نام ثانویه را وارد کیند</div>
+
+                    </div>
+                </div>
+
+                <div class="row  mb-3 mt-3">
+                    <label for="Descriptiontxt" class="form-label col-md-1">توضیحات:</label>
+                    <div class="col-md-6">
+                        @if (Model?.product != null)
+                        {
+                            <textarea class="form-control " rows="4" maxlength="200" autocomplete="off" id="Descriptiontxt" name="Description" required>@Model.product.Description</textarea>
+
+                        }
+                        else
+                        {
+                            <textarea class="form-control " rows="4" maxlength="200" autocomplete="off" id="Descriptiontxt" name="Description" required></textarea>
+
+                        }
+                        <div class="invalid-feedback">لطفا توضیحات را وارد کیند</div>
+                    </div>
+                </div>
+
+
+
+                <div class="row mb-3">
+                    <label for="ddlgroup" class="form-label col-md-1">گروه:</label>
+                    <div class="col-md-6">
+                        <select class="form-select" id="ddlgroup"   name="Group" required>
+                            <option selected disabled value="">لطفا انتخاب کنید...</option>
+                            @foreach (var group in groups)
+                            {
+                                <option  value="@group.Id">@group.Title</option>
+                            }
+                        </select>
+                        <div class="invalid-feedback">لطفا گروه را انتخاب کنید</div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="ddlPrice" class="form-label col-md-1">قیمت:</label>
+                    <div class="col-md-6">
+                        @if (Model == null)
+                        {
+                            <input class="form-control" type="text" id="ddlPrice" name="Price" required/>
+
+                        }
+                        else
+                        {
+                            <input class="form-control" type="text" id="ddlPrice" value="@Model.product.Price" name="Price" required/>
+
+                        }
+                        <div class="invalid-feedback">لطفا قیمت را انتخاب کنید</div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="ddlState" class="form-label col-md-1">وضعیت:</label>
+                    <div class="col-md-6">
+                        <select class="form-select" id="ddlState" name="state" required>
+                            @if (Model != null && Model?.product?.state == toyshop.Models.Products.State.Enabled)
+                            {
+                                <option disabled value="">لطفا انتخاب کنید...</option>
+                                <option selected="selected" value="1">فعال</option>
+                                <option value="2">غیر فعال</option>
+
+
+                            }
+                            else if (Model != null && Model?.product?.state == toyshop.Models.Products.State.Disable)
+                            {
+                                <option disabled value="">لطفا انتخاب کنید...</option>
+                                <option value="1">فعال</option>
+                                <option selected="selected" value="2">غیر فعال</option>
+
+                            }
+                            else if (Model?.product == null)
+                            {
+                                <option selected disabled value="">لطفا انتخاب کنید...</option>
+                                <option value="1">فعال</option>
+                                <option value="2">غیر فعال</option>
+                            }
+                        </select>
+                        <div class="invalid-feedback">لطفا وضعیت را انتخاب کنید</div>
+                    </div>
+                </div>
+
+                <div class="row  mb-3 mt-3">
+                    <label for="formPhoto" class="form-label col-md-1">تصویر:</label>
+                    <div class="col-md-6">
+                        @if (Model != null)
+                        {
+                            <input type="file" class="form-control-File" id="formPhoto" maxlength="50" name="Photo" autocomplete="off">
+
+                        }
+                        else
+                        {
+                            <input type="file" class="form-control-File" id="formPhoto" maxlength="50" name="Photo" autocomplete="off" required>
+
+                        }
+                        <div class="invalid-feedback">لطفا   Photo را وارد کیند</div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-success pe-3 ps-3 mb-3">ثبت </button>
+
+                    </div>
+                </div>
+
+            </form>
+
+
+
+
+
+        </div>
+    </div>
+
+}
+@section Scripts{
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.querySelectorAll('.validnd')
+
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
+}
+
+

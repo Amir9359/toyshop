@@ -1,0 +1,103 @@
+﻿ 
+ 
+@{
+    ViewData["title"] = "ورود به صفحه ادمین";
+    Layout = null;
+    var idd = ViewBag.Idd;
+
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>صفحه ادمین | @ViewBag.Title</title>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/bootstrap.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div class="container-fluid mt-lg-5">
+
+
+        <div class="card w-50 m-lg-auto d-flex justify-content-center" dir="rtl">
+            <div class="card-header bg-info" style="position:relative;left:1px;width: 100.1%;">
+                <h1 class="h5 ">ورود به پنل مدیریتی</h1>
+
+            </div>
+            <div class="card-body " dir="rtl">
+                <form asp-area="Admin" asp-controller="Account" asp-action="Signin"  class="form-control validnd"
+                       method="post" enctype="multipart/form-data" novalidate>
+
+                    <div class="row  mb-3 mt-3  justify-content-md-center">
+                        <label for="txtusername" class="form-label col-md-2">نام کاربری:</label>
+                        <div class="col-md-6">
+                            <input class="form-control " id="txtusername" autocomplete="off" maxlength="50" name="username" required>
+                            <div class="invalid-feedback">لطفا نام کاربری را وارد کیند</div>
+                        </div>
+                    </div>
+
+                    <div class="row  mb-3 mt-3 justify-content-sm-center">
+                        <label for="txtpassword" class="form-label col-md-2"> رمز عبور:</label>
+                        <div class="col-md-6">
+                            <input class="form-control" id="txtpassword" type="password" autocomplete="off" maxlength="30" name="password" required>
+                            <div class="invalid-feedback">لطفا رمز عبور را وارد کیند</div>
+
+                        </div>
+                    </div>
+
+                    <div class="row  mb-3 mt-3 justify-content-sm-center">
+                        <label></label>
+                        <div class="col-md-7  p-0 mt-1">
+                            <div class="custom-control custom-checkbox">
+                                <input class="custom-control-checkbox" type="checkbox" id="chk-rememberme" name="rememberme" value="true" />
+                                <label class="custom-control-label" for="chk-rememberme">مرا بخاطر بسپار</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-sm-center">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-success pe-3 ps-3 mb-3">ورود </button>
+
+                        </div>
+                    </div>
+
+                </form>
+
+                <div class="text-danger mt-3">@ViewBag.error</div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.js"></script>
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.querySelectorAll('.validnd')
+
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
+
+</body>
+</html>
