@@ -1,5 +1,6 @@
 ﻿@using System.Reflection
 @using Microsoft.EntityFrameworkCore
+@using toyshop.Models.Products
 @using toysite.Models
 @inject ApplicationDbContext _context;
 
@@ -20,13 +21,7 @@
     <div class="wrapper">
         <div class="row">
             <div class="breadcrumbsBox col-lg-12 col-md-12 col-sm-12 col-xs-12 clearfix">
-                <ul class="breadcrumb-list">
-                    <li class="pageTxtColor robotoLight">
-                        <i class="fa fa-angle-left"></i>
-                        <a href="home-1.html" class="pageTxtColor robotoLight">خانه</a>
-                    </li>
-
-                </ul>
+         
             </div>
             <div class="col-lg-9 col-md-8 col-sm-12 col-xs-12 clearfix">
 
@@ -58,7 +53,14 @@
                             <div class="blog-info_body">
                                 <h3 class="blog-info_title ralewaySemiBold blackTxtColor">@product.PrimaryTitle</h3>
                                 <div class="blog-info_text robotoLight pageTxtColor">@product.Description</div>
-                                <a asp-controller="Cart" asp-action="Index" asp-route-productitemsid="@product.Id"  class="ellipseLink middleBtn robotoMedium whiteTxtColor customBgColor hvr-pop">اضافه به سبد</a>
+                                @if (product.Count == 0)
+                                {
+                                    <a   class="ellipseLink middleBtn robotoMedium whiteTxtColor customBgColor hvr-pop" >موجود نیست</a>
+                                }
+                                else
+                                {
+                                    <a asp-controller="Cart" asp-action="Index" asp-route-productitemsid="@product.Id" class="ellipseLink middleBtn robotoMedium whiteTxtColor customBgColor hvr-pop">اضافه به سبد</a>
+                                }
                             </div>
                         </div>
                     </div>
@@ -109,5 +111,4 @@
         </div>
     </div>
 </section>
-
-
+ 

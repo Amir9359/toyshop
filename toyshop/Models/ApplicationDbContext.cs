@@ -22,8 +22,21 @@ namespace toysite.Models
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductItem> ProductItems { get; set; }
         public DbSet<Address> Addresses { get; set; }
+        public DbSet<PayedCart> PayedCarts { get; set; }
+        public DbSet<PayedCartItems> PayedCartItems { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> op) : base(op)
         {
+
+        }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<PayedCart>()
+                .HasMany(a => a.PayedCarts)
+                .WithOne(u => u.PayedCarts)
+                .HasForeignKey(aa => aa.PayedCartid);
+
+            base.OnModelCreating(builder);
 
         }
 

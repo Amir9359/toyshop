@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using toysite.Models;
 
-namespace Project_Digikala.Areas.Admin.Controllers
+namespace toyshop.Areas.Admin.Controllers
 {
     
     public class BaseController : Controller

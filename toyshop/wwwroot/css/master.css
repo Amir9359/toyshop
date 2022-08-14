@@ -20,11 +20,16 @@ Profile:	http://themeforest.net/user/andreysokoltsov
 
 
 /* FONTS*/
-@import url(//fonts.googleapis.com/css?family=Roboto+Condensed:400,700);
-@import url(//fonts.googleapis.com/css?family=Raleway:400,600,300,500,700);
-@import url(//fonts.googleapis.com/css?family=Roboto:400,500,300,400italic);
+ 
 @import url('../fonts/font-awesome/css/font-awesome.min.css');
 
+@font-face {
+    font-family: "Vazir";
+    src: url("../fonts/Vazir-Light.eot");
+    src: url("../fonts/Vazir-Light.eot") format("embedded-opentype"), url("../fonts/Vazir-Light.woff") format("woff"), url("../fonts/Vazir-Light.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
 
 /* PLUGIN CSS */
 @import url('../plugins/loader/css/loader.css');
@@ -37,13 +42,17 @@ Profile:	http://themeforest.net/user/andreysokoltsov
 
 
 .menu-item {
-    font-family: tahoma !important;
+    font-family:'Vazir' !important;
     font-size: 1.7rem !important;
+    text-decoration: none;
 }
-.menu {
-    direction: rtl !important;
-    float: right !important;
-}
+    .menu-item:hover {
+        text-decoration: none;
+    }
+    .menu {
+        direction: rtl !important;
+        float: right !important;
+    }
 ul.menu > li {
     float: right !important;
 }

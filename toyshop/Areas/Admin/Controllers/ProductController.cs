@@ -9,9 +9,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using System.Globalization;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Project_Digikala.Areas.Admin;
-using Project_Digikala.Areas.Admin.Controllers;
 using toyshop.Models;
 using toyshop.Models.Products;
 using toyshop.Models.Groups;
@@ -30,17 +31,19 @@ namespace toyshop.Areas.Admin.Controllers
         private UserManager<User> UserManager;
         private IProductRepository _productRepo;
         private IGroupRepository groupRepo;
+        private ApplicationDbContext _context;
         private IHostingEnvironment hosting;
         private IProductItemRepository ProductItemRepo;
 
         public ProductController(UserManager<User> userManager, IProductRepository productRepo, 
-            IGroupRepository groupRepo, IHostingEnvironment hosting, IProductItemRepository productItemRepo) :base(userManager)
+            IGroupRepository groupRepo, IHostingEnvironment hosting, IProductItemRepository productItemRepo, ApplicationDbContext context) :base(userManager)
         {
             UserManager = userManager;
             _productRepo = productRepo;
             this.groupRepo = groupRepo;
             this.hosting = hosting;
             ProductItemRepo = productItemRepo;
+            _context = context;
         }
 
         #endregion /Properties
@@ -93,6 +96,7 @@ namespace toyshop.Areas.Admin.Controllers
                         state = item.state,
                         Creator = item.Creator?.Name + " " + item.Creator?.LastName,
                         CreateDate = persian.PersianDate(item.CreateDate),
+                        Count = item.Count
                     });
                 }
 
@@ -124,7 +128,8 @@ namespace toyshop.Areas.Admin.Controllers
                 SecondTitle = product.SecondTitle,
                 state = product.state,
                 Description = product.Description,
-                Price = product.Price
+                Price = product.Price,
+                Count = product.Count
             };
             var selectgroup = await groupRepo.FindAsync(GroupbrandModel.product.groupid);
 
@@ -136,20 +141,14 @@ namespace toyshop.Areas.Admin.Controllers
 
         public async Task<IActionResult> Delete(int Id)
         {
-            var productitem = new ProductItem
-            {
-                Product = new Product
-                {
-                    Id = Id
-                }
-            };
- 
 
-            var Pitem = await ProductItemRepo.search(productitem.Id);
-            if (Pitem != null && Pitem.Count != 0)
+            var productitem = await _context.PayItems.Where(s => s.Product.Id == Id).ToListAsync();
+
+            if (productitem != null && productitem.Count != 0)
             {
-                await ProductItemRepo.Delete(Pitem.SingleOrDefault().Id);
-                await ProductItemRepo.save();
+                _context.PayItems.RemoveRange(productitem);
+                await _context.SaveChangesAsync();
+ 
             }
 
 
@@ -163,37 +162,48 @@ namespace toyshop.Areas.Admin.Controllers
         #region HttpPost
         [HttpPost]
         public async Task<IActionResult> save(int? Id, string PrimaryTitle, string SecondaryTitle, string Description,
-            int brand, int Group, int Price , byte state, IFormFile Photo)
+            int Group, int Price, int count, byte state, IFormFile Photo)
         {
             if (Id == null)
             {
-                Product product = new Product
+                if (Photo.Length < 500000)
                 {
-                    groupid = Group,
-                    PrimaryTitle = PrimaryTitle,
-                    SecondTitle = SecondaryTitle,
-                    state = (State)state,
-                    Description = Description,
-                    Creator = new User()
+
+
+                    Product product = new Product
                     {
-                        Id = this.Operator.Id
-                    },
-                    CreateDate = DateTime.Now,
-                    Price = Price
-                };
+                        groupid = Group,
+                        PrimaryTitle = PrimaryTitle,
+                        SecondTitle = SecondaryTitle,
+                        state = (State) state,
+                        Description = Description,
+                        Creator = new User()
+                        {
+                            Id = this.Operator.Id
+                        },
+                        CreateDate = DateTime.Now,
+                        Price = Price,
+                        Count = count
+                    };
 
-                await _productRepo.AddAsync(product);
-                await _productRepo.saveAsync();
-                var productid = product.Id;
+                    await _productRepo.AddAsync(product);
+                    await _productRepo.saveAsync();
+                    var productid = product.Id;
 
-                var ext = Path.GetExtension(Photo.FileName);
-                var path = Path.Combine(hosting.WebRootPath + "\\media\\blog-preview", productid + " "+ ext);
-                using (var filestream = new FileStream(path, FileMode.Create))
-                {
-                    await Photo.CopyToAsync(filestream);
+                    var ext = Path.GetExtension(Photo.FileName);
+                    var path = Path.Combine(hosting.WebRootPath + "\\media\\blog-preview", productid + " " + ext);
+                    using (var filestream = new FileStream(path, FileMode.Create))
+                    {
+                        await Photo.CopyToAsync(filestream);
+                    }
+
+                    return RedirectToAction("List");
                 }
-                return RedirectToAction("List");
-
+                else
+                {
+                    ModelState.AddModelError("Photo" , "حداکثر سایز عکس باید کم تر از 500 کیلو بایت باشد !");
+                    return View("Add");
+                }
             }
             else
             {//edit
@@ -206,7 +216,8 @@ namespace toyshop.Areas.Admin.Controllers
                     SecondTitle = SecondaryTitle,
                     state = (State)state,
                     Description = Description,
-                    Price = Price
+                    Price = Price,
+                    Count = count
                 };
                 _productRepo.Update(product);
                 await _productRepo.saveAsync();

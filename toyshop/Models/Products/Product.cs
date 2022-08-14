@@ -13,6 +13,7 @@ namespace toyshop.Models.Products
         public string Description { get; set; }
         public float Price { get; set; }
         public Group group { get; set; }
+        public int Count { get; set; }
         public int groupid { get; set; }
         public State state { get; set; }
 

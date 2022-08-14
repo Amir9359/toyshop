@@ -16,7 +16,9 @@
     font-weight: normal;
     font-style: normal;
 }
-
+a:focus, a:hover {
+    text-decoration: none !important;
+}
 .wrapper {
     margin-left: auto;
     margin-right: auto;

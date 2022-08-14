@@ -36,9 +36,9 @@ namespace toyshop.Controllers
                     if (signin.Succeeded)
                     {
                         var claimCheck = await UserManager.GetClaimsAsync(user);
-                        if (claimCheck.Any(t=>t.Value == "Customer"))
+                        if (claimCheck.Any(t=>t.Value != "Customer") || claimCheck.Count == 0)
                         {
-                            return Redirect("/");
+                            return RedirectToAction("Index", "Home");
                         }
                     }
                     else
@@ -82,7 +82,7 @@ namespace toyshop.Controllers
                 if (signup.Succeeded)
                 {
                     await Signin(email, password, true);
-                    return Redirect("/");
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {

@@ -25,6 +25,36 @@
     margin-top: 30px;
 
 }
+.table-col {
+    text-align: right;
+    padding: 10px 20px;
+    border: 1px solid #555;
+}
+.table-body {
+    text-align: center;
+    padding: 30px 10px;
+    border: 1px solid #555;
+
+}
+table tbody tr {
+    background-color: #999;
+}
+table tbody tr:nth-child(2n) {
+    background-color: #dddddd;
+}
+.btn-delete {
+    padding: 10px 20px;
+    background-color: #a52a2a;
+    color: #ddd;
+    transition: .5s;
+    border-radius: 7px;
+    text-decoration: none;
+}
+    .btn-delete:hover {
+        background-color: orange;
+        color: #444;
+        text-decoration: none;
+    }
 .grid-c {
     display: grid;
     grid-template-columns: 600px 700px;

@@ -27,7 +27,12 @@ namespace toyshop.Repository
         {
             await _Context.PayItems.AddRangeAsync(orderItems);
         }
-
+        public async Task<PayItems> FindItem(int id)
+        {
+            var cartItem = await _Context.PayItems.Include(c => c.Product)
+                .SingleOrDefaultAsync(c => c.Id == id);
+            return cartItem;
+        }
         public async Task<Pay> Find(int orderId)
         {
             var pay = await _Context.Pays
@@ -39,11 +44,29 @@ namespace toyshop.Repository
             return pay;
         }
 
+        public async Task<List<PayItems>> search(string customerId)
+        {
+            var payItems = await _Context.PayItems.Include(d => d.Product).Where(s => s.pay.Customer.Id == customerId).ToListAsync();
+
+            return payItems;
+        }
+
         public async Task save()
         {
             await _Context.SaveChangesAsync();
         }
 
+        public async Task<bool> DeleteCartItem(int id)
+        {
+            var cartItem = await _Context.PayItems.SingleOrDefaultAsync(s => s.Id == id);
+            if (cartItem != null)
+            {
+                _Context.PayItems.Remove(cartItem);
+                return true;
+            }
+
+            return false;
+        }
         public async Task  Update(int orderid, string FishNumber, string PayDate)
         {
             var ord =await _Context.Pays.FindAsync(orderid);

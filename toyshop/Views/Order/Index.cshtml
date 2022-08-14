@@ -1,12 +1,13 @@
 ﻿@using toyshop.InfraStructure
 @using toyshop.Models
 @using Microsoft.AspNetCore.Identity
+@using toyshop.Models.Payment
 @using toysite.Models
 @model toyshop.Models.Profile.Address
 
 @section Style
 {
- 
+
     <meta charset="utf-8">
     <link rel="stylesheet" href="~/css/reset.css" type="text/css">
     <link rel="stylesheet" href="~/css/layout.css" type="text/css">
@@ -18,9 +19,11 @@
 
 @inject UserManager<User> userManager
 @inject SignInManager<User> signInManager
+@inject IPayItemRepository _payItemRepo;
+
 @{
     ViewData["Title"] = "ثبت سفارش";
-    ViewData["Massage"] ="سبد خرید";
+    ViewData["Massage"] = "سبد خرید";
     var message = "";
     var action = "";
     var control = "";
@@ -44,6 +47,8 @@
         action = "save";
         control = "Order";
     }
+    var cartItems = await _payItemRepo.search(Customer.Id);
+    int couter = 1;
 }
 
 <article id="content-pay">
@@ -54,6 +59,45 @@
                 <a class="button" href="/"><span class="button-text">@message</span></a>
             </div>
 
+            <table style="width: 100%">
+                <thead>
+                <tr>
+                    <th scope="col" style="width:2%" class="table-col">#</th>
+                    <th scope="col" style="width: 35%; " class="table-col">مشخصات محصول</th>
+                    <th scope="col" style="width: 10%; " class="table-col">تعداد</th>
+                    <th scope="col" style="width: 10%; " class="table-col">قیمت تکی</th>
+                    <th scope="col" style="width: 20%; " class="table-col">عملیات </th>
+                </tr>
+                </thead>
+                <tbody>
+
+                    @if (cartItems != null)
+                    {
+                        @foreach (var item in cartItems)
+                        {
+                            <tr>
+                                <th scope="row" style="width: 2%; " class="table-body">@couter</th>
+                                <td style="width:35%" class="table-body">
+                                    <strong><a class="text-decoration-none"  asp-controller="Home"
+                                               asp-action="Details" asp-route-Id="@item.Product.Id">@item.Product.PrimaryTitle</a></strong><br />
+                                    <span>@item.Product.SecondTitle</span><br />
+                                    <span class="text-muted">شناسه :@item.Id</span>
+                                </td>
+                                <td style="width:10%" class="table-body">@item.Quantity</td>
+                     
+                                    <td class="table-body">@item.Price</td>
+ 
+                                <td class="align-middle table-body" style="width:20%">
+                                         <a class=" btn-delete" asp-controller="Order"  asp-action="DeleteCartItem" asp-route-id="@item.Id">حذف از سبد</a> 
+ 
+                                </td>
+                            </tr>
+                            { couter++; }
+                        }
+                    }
+
+                </tbody>
+            </table>
             <form asp-action="@action" asp-controller="@control" method="post" class="order-form validnd" novalidate>
                 <section class="order-form__section">
                     <h2 class="order-form__header">اطلاعات تماس</h2>
@@ -100,6 +144,8 @@
                     <h2 class="order-form__header">روش پرداخت</h2>
                     <div class="order-form__content">
 
+                        <input type="text" name="Fish" style="width: 200px; "
+                               placeholder="شماره فیش پرداختی" />
 
                         <div class="order-form__group">
                             <span class="order-form__label"></span>
@@ -116,7 +162,8 @@
                                 </label>
 
                             </div>
-
+                     
+                           
                         </div>
 
 

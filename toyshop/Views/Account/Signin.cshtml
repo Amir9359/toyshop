@@ -38,7 +38,7 @@
     <div class="limiter">
         <div class="container-login100">
             <div class="wrap-login100">
-                <form class="login100-form validate-form" asp-action="Signin" >
+                <form class="login100-form validate-form" asp-action="Signin" asp-controller="Account">
                     <span class="login100-form-title p-b-26">
                         خوش آمدید
                     </span>
@@ -76,7 +76,7 @@
                             حساب کاربری ندارید؟
                         </span>
 
-                        <a class="txt2" asp-action="Signup">
+                        <a class="txt2" asp-action="Signup" asp-controller="Account">
                             ثبت نام
                         </a>
                     </div>

@@ -16,6 +16,7 @@ namespace toyshop.Models.ViewModels.Product
         public Group group { get; set; }
  
         public State state { get; set; }
+        public int Count { get; set; }
 
         public string Creator { get; set; }
         public string CreateDate { get; set; }

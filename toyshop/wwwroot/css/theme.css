@@ -115,7 +115,7 @@ a:-moz-focus-inner{
 	display: none;
 }
 .wrapper{
-	width: 1184px;
+	width: 1300px;
 	min-width: 320px;
 	margin: auto;
 	display: block;
@@ -138,45 +138,45 @@ a:-moz-focus-inner{
 	width: 100%;
 	overflow: hidden;
 }
-.roboto{
+.roboto {
 	font-weight: 400;
-	font-family: 'Roboto', sans-serif;
+	font-family: 'Vazir';
 }
-.robotoItalic{
+.robotoItalic {
 	font-weight: 400;
-	font-family: 'Roboto', sans-serif;
+	font-family: 'Vazir';
 	font-style: italic;
 }
 .robotoLight{
 	font-weight: 300;
-	font-family: 'Roboto', sans-serif;
+	font-family: 'Vazir';
 }
-.robotoMedium{
+.robotoMedium {
 	font-weight: 500;
-	font-family: 'Roboto', sans-serif;
+	font-family: 'Vazir';
 }
 .robotoCondensed{
 	font-weight: 400;
-	font-family: 'Roboto Condensed', sans-serif;
+	font-family: 'Vazir';
 }
 .robotoCondensedBold{
 	font-weight: 700;
-	font-family: 'Roboto Condensed', sans-serif;
+	font-family: 'Vazir';
 }
-.raleway{
-	font-family: 'Raleway', sans-serif;
+.raleway {
+	font-family: 'Vazir';
 	font-weight: 400;
 }
-.ralewayLight{
-	font-family: 'Raleway', sans-serif;
+.ralewayLight {
+	font-family: 'Vazir'f;
 	font-weight: 300;
 }
-.ralewayMedium{
-	font-family: 'Raleway', sans-serif;
+.ralewayMedium {
+	font-family: 'Vazir';
 	font-weight: 500;
 }
 .ralewaySemiBold{
-	font-family: 'Raleway', sans-serif;
+	font-family: 'Vazir';
 	font-weight: 600;
     text-align: right;
 }

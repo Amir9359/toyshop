@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using toysite.Models;
 
 namespace toyshop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220810053437_PayeditemsId")]
+    partial class PayeditemsId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -177,8 +179,6 @@ namespace toyshop.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CusstomerId");
-
                     b.Property<DateTime>("Date");
 
                     b.Property<string>("FishSabt");
@@ -186,8 +186,6 @@ namespace toyshop.Migrations
                     b.Property<int>("PayedCartItemID");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CusstomerId");
 
                     b.ToTable("PayedCarts");
                 });
@@ -204,7 +202,8 @@ namespace toyshop.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PayedCartid");
+                    b.HasIndex("PayedCartid")
+                        .IsUnique();
 
                     b.ToTable("PayedCartItems");
                 });
@@ -431,18 +430,11 @@ namespace toyshop.Migrations
                         .HasForeignKey("CustomerId");
                 });
 
-            modelBuilder.Entity("toyshop.Models.Payment.PayedCart", b =>
-                {
-                    b.HasOne("toyshop.Models.User", "Cusstomer")
-                        .WithMany()
-                        .HasForeignKey("CusstomerId");
-                });
-
             modelBuilder.Entity("toyshop.Models.Payment.PayedCartItems", b =>
                 {
-                    b.HasOne("toyshop.Models.Payment.PayedCart", "PayedCarts")
-                        .WithMany("PayedCarts")
-                        .HasForeignKey("PayedCartid")
+                    b.HasOne("toyshop.Models.Payment.PayedCart")
+                        .WithOne("PayedCartItems")
+                        .HasForeignKey("toyshop.Models.Payment.PayedCartItems", "PayedCartid")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

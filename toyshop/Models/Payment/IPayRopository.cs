@@ -14,7 +14,8 @@ namespace toyshop.Models.Payment
         Task<List<Pay>> search(string customerId);
         Task Update(PayItems item);
         Task Delete(int payItemId);
- 
+
+
         Task DeletePay(int payId);
         void  DeletPayItems(List<PayItems> payItems);
  

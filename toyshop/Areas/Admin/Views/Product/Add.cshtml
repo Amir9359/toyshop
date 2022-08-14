@@ -94,11 +94,11 @@
                 <div class="row mb-3">
                     <label for="ddlgroup" class="form-label col-md-1">گروه:</label>
                     <div class="col-md-6">
-                        <select class="form-select" id="ddlgroup"   name="Group" required>
+                        <select class="form-select" id="ddlgroup" name="Group" required>
                             <option selected disabled value="">لطفا انتخاب کنید...</option>
                             @foreach (var group in groups)
                             {
-                                <option  value="@group.Id">@group.Title</option>
+                                <option value="@group.Id">@group.Title</option>
                             }
                         </select>
                         <div class="invalid-feedback">لطفا گروه را انتخاب کنید</div>
@@ -110,12 +110,28 @@
                     <div class="col-md-6">
                         @if (Model == null)
                         {
-                            <input class="form-control" type="text" id="ddlPrice" name="Price" required/>
+                            <input class="form-control" type="text" id="ddlPrice" name="Price" required />
 
                         }
                         else
                         {
-                            <input class="form-control" type="text" id="ddlPrice" value="@Model.product.Price" name="Price" required/>
+                            <input class="form-control" type="text" id="ddlPrice" value="@Model.product.Price" name="Price" required />
+
+                        }
+                        <div class="invalid-feedback">لطفا قیمت را انتخاب کنید</div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="ddlCount" class="form-label col-md-1">تعداد:</label>
+                    <div class="col-md-6">
+                        @if (Model == null)
+                        {
+                            <input class="form-control" type="number" id="ddlCount" name="count" required />
+
+                        }
+                        else
+                        {
+                            <input class="form-control" type="text" id="ddlCount" value="@Model.product.Count" name="count" required />
 
                         }
                         <div class="invalid-feedback">لطفا قیمت را انتخاب کنید</div>
@@ -152,22 +168,19 @@
                     </div>
                 </div>
 
-                <div class="row  mb-3 mt-3">
-                    <label for="formPhoto" class="form-label col-md-1">تصویر:</label>
-                    <div class="col-md-6">
-                        @if (Model != null)
-                        {
+                @if (Model == null)
+                {
+
+                    <div class="row  mb-3 mt-3">
+                        <label for="formPhoto" class="form-label col-md-1">تصویر:</label>
+                        <div class="col-md-6">
                             <input type="file" class="form-control-File" id="formPhoto" maxlength="50" name="Photo" autocomplete="off">
-
-                        }
-                        else
-                        {
-                            <input type="file" class="form-control-File" id="formPhoto" maxlength="50" name="Photo" autocomplete="off" required>
-
-                        }
-                        <div class="invalid-feedback">لطفا   Photo را وارد کیند</div>
+                            <div class="invalid-feedback">لطفا   Photo را وارد کیند</div>
+                        </div>
                     </div>
-                </div>
+                }
+
+
 
                 <div class="row">
                     <div class="col-md-1"></div>
@@ -176,7 +189,7 @@
 
                     </div>
                 </div>
-
+                <div class="text-danger" asp-validation-summary="All"></div>
             </form>
 
 

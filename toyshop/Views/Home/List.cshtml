@@ -21,10 +21,17 @@
                         <div class="app-product-item_body_price robotoCondensed pull-left">تومان  @product.Price.ToString("N0")</div>
 
                         <div class="app-product-item_body_btnbox">
-                            <a asp-controller="Cart" asp-action="Index" asp-route-productitemsid="@product.Id" class="ellipseLink addToCartBtn robotoMedium text-uppercase hvr-pop">
-                                <i class="fa fa-shopping-cart customColor"></i>
-                                اضافه به سبد کالا
-                            </a>
+       
+                            @if (product.Count == 0)
+                            {
+                                <a   class="ellipseLink middleBtn robotoMedium whiteTxtColor customBgColor hvr-pop" >موجود نیست</a>
+                            }
+                            else
+                            {
+                                <a asp-controller="Cart" asp-action="Index" asp-route-productitemsid="@product.Id" class="ellipseLink addToCartBtn robotoMedium text-uppercase hvr-pop">
+                                    <i class="fa fa-shopping-cart customColor"></i>اضافه به سبد کالا
+                                </a>
+                            }
                         </div>
                     </div>
                 </div>

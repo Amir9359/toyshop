@@ -23,7 +23,7 @@ namespace toyshop.Controllers
             _payRopo = payRopo;
             _ProductRepo = ProductRepo;
         }
-    public async Task<IActionResult> Index(int? productitemsid, int? count = 1)
+    public async Task<IActionResult> Index(int? productitemsid, int count = 1)
     {
             if (!User.Identity.IsAuthenticated)
             {
@@ -36,7 +36,7 @@ namespace toyshop.Controllers
                 if (productitemsid != null && count != null)
                 {
                     var Pitem = await _ProductRepo.FindAsync((int)productitemsid);
-                    if (pay != null)
+                    if (pay != null && Pitem.Count >= count)
                     {
                         if (pay.PayItems.Any(c=>c.Product.Id == productitemsid))
                         {
@@ -44,8 +44,10 @@ namespace toyshop.Controllers
                             await _payRopo.Update(new PayItems
                             {
                                 Id=payItem.Id,
-                                Quantity=(int)count 
+                                Quantity=(int)count,
+                                Price = Pitem.Price
                             });
+                            Pitem.Count = Pitem.Count - count;
                             await _payRopo.save();
                             return RedirectToAction("Index", "Home");
                         }
@@ -55,9 +57,10 @@ namespace toyshop.Controllers
                             {
                                 pay = pay,
                                 Product  = Pitem,
-                                Quantity = (int)count
+                                Quantity = (int)count,
+                                Price = Pitem.Price
                             });
-
+                            Pitem.Count = Pitem.Count - count;
                             await _payRopo.save();
 
                             return RedirectToAction("Index" , "Home");
@@ -84,6 +87,7 @@ namespace toyshop.Controllers
                             Quantity = (int)count,
                             Price = Pitem.Price
                         });
+                        Pitem.Count = Pitem.Count - count;
 
                         await _payRopo.save();
 
@@ -103,6 +107,7 @@ namespace toyshop.Controllers
     public async Task<IActionResult> Remove(int id)
     {
            await _payRopo.Delete(id);
+           await _payRopo.DeletePay(id);
             await _payRopo.save();
             return new RedirectResult("/Cart");
     }

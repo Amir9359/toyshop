@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using toysite.Models;
 
 namespace toyshop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220810064737_PayeditemesMigrat")]
+    partial class PayeditemesMigrat
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -177,8 +179,6 @@ namespace toyshop.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CusstomerId");
-
                     b.Property<DateTime>("Date");
 
                     b.Property<string>("FishSabt");
@@ -186,8 +186,6 @@ namespace toyshop.Migrations
                     b.Property<int>("PayedCartItemID");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CusstomerId");
 
                     b.ToTable("PayedCarts");
                 });
@@ -429,13 +427,6 @@ namespace toyshop.Migrations
                     b.HasOne("toyshop.Models.User", "Customer")
                         .WithMany()
                         .HasForeignKey("CustomerId");
-                });
-
-            modelBuilder.Entity("toyshop.Models.Payment.PayedCart", b =>
-                {
-                    b.HasOne("toyshop.Models.User", "Cusstomer")
-                        .WithMany()
-                        .HasForeignKey("CusstomerId");
                 });
 
             modelBuilder.Entity("toyshop.Models.Payment.PayedCartItems", b =>

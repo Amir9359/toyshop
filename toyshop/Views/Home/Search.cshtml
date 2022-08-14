@@ -56,7 +56,15 @@
                             <div class="blog-info_body">
                                 <h3 class="blog-info_title ralewaySemiBold blackTxtColor">@product.PrimaryTitle</h3>
                                 <div class="blog-info_text robotoLight pageTxtColor">@product.Description</div>
-                                <a asp-controller="Cart" asp-action="Index" asp-route-productitemsid="@product.Id" class="ellipseLink middleBtn robotoMedium whiteTxtColor customBgColor hvr-pop">اضافه به سبد</a>
+                                @if (product.Count == 0)
+                                {
+                                    <a   class="ellipseLink middleBtn robotoMedium whiteTxtColor customBgColor hvr-pop" >موجود نیست</a>
+                                }
+                                else
+                                {
+                                    <a asp-controller="Cart" asp-action="Index" asp-route-productitemsid="@product.Id" class="ellipseLink middleBtn robotoMedium whiteTxtColor customBgColor hvr-pop">اضافه به سبد</a>
+                                }
+                               
                             </div>
                         </div>
                     </div>
